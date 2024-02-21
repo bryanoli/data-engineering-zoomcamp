@@ -10,10 +10,10 @@ with tripdata as
 select
    -- identifiers
     {{ dbt_utils.surrogate_key(['vendorid', 'tpep_pickup_datetime']) }} as tripid,
-    cast(vendorid as integer) as vendorid,
-    cast(ratecodeid as integer) as ratecodeid,
-    cast(pulocationid as integer) as  pickup_locationid,
-    cast(dolocationid as integer) as dropoff_locationid,
+    cast(vendorid as numeric) as vendorid,
+    cast(ratecodeid as numeric) as ratecodeid,
+    cast(pulocationid as numeric) as  pickup_locationid,
+    cast(dolocationid as numeric) as dropoff_locationid,
     
     -- timestamps
     cast(tpep_pickup_datetime as timestamp) as pickup_datetime,
@@ -21,7 +21,7 @@ select
     
     -- trip info
     store_and_fwd_flag,
-    cast(passenger_count as integer) as passenger_count,
+    cast(passenger_count as numeric) as passenger_count,
     cast(trip_distance as numeric) as trip_distance,
     -- yellow cabs are always street-hail
     1 as trip_type,
@@ -35,7 +35,7 @@ select
     cast(0 as numeric) as ehail_fee,
     cast(improvement_surcharge as numeric) as improvement_surcharge,
     cast(total_amount as numeric) as total_amount,
-    coalesce(cast(payment_type as integer),0) as payment_type,
+    coalesce(cast(payment_type as numeric),0) as payment_type,
     {{ get_payment_type_description('payment_type') }} as payment_type_description
 from tripdata
 where rn = 1
@@ -46,4 +46,3 @@ where rn = 1
   limit 100
 
 {% endif %}
-
