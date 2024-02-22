@@ -9,6 +9,7 @@ sources:
 
       # loaded_at_field: record_loaded_at
     tables:
+      - name: fhv_trips_2019
       - name: green_tripdata
       - name: yellow_tripdata
          # freshness:
